@@ -126,8 +126,8 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    FETCH_ITEMS({ commit }) {
-      axios.get("/api/filelist").then((response) => {
+    FETCH_ITEMS({ commit }, payload) {
+      axios.get("/api/filelist/" + payload).then((response) => {
         let items = response.data;
         commit("SET_ITEMS", items);
       });
