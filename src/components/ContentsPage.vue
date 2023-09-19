@@ -8,6 +8,7 @@
     <br />
     <br />
     <br />
+    <!-- <ChartImage></ChartImage> -->
     <LineChart></LineChart>
     <br />
     <br />
@@ -21,10 +22,12 @@ import LineChart from "./LineChart.vue";
 import FileUpload from "./FileUpload.vue";
 import ImageGrid from "./ImageGrid.vue";
 import FileList from "./FileList.vue";
+// import ChartImage from "./ChartImage";
 
 export default {
   name: "ContentsPage",
   components: { LineChart, FileUpload, ImageGrid, FileList },
+  // components: { ChartImage, FileUpload, ImageGrid, FileList },
   data() {
     return {};
   },
