@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const baseURL = axios.create({
-    baseURL: "http://10.10.2.50:8000", // API의 기본 URL 설정
+    // baseURL: "http://10.10.2.50:8000", // API의 기본 URL 설정
+    baseURL: "", // API의 기본 URL 설정
     // baseURL: "http://133.186.211.151:8000", // API의 기본 URL 설정
     // baseURL: "http://localhost:80", // API의 기본 URL 설정
     timeout: 3000, // 요청 타임아웃 설정 (10초)
