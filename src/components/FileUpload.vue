@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import baseURL from "@/store/baseUrl";
+
 export default {
   data() {
     return {
@@ -34,7 +36,7 @@ export default {
       formData.append("file", this.selectedFile);
       // console.log(formData);
       try {
-        const response = await this.$axios.post("/api/upload/", formData, {
+        const response = await baseURL.post("/api/upload/", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
