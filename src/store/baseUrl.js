@@ -8,8 +8,6 @@ const baseURL = axios.create({
     headers: {
       "Content-Type": "application/json", // 요청 헤더 설정
       // 다른 원하는 헤더 설정 가능
-      "Access-Control-Allow-Origin": `http://133.186.211.151:8000`,
-      'Access-Control-Allow-Credentials':"true",
     },
 });
 
