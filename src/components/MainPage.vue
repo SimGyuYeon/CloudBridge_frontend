@@ -1,6 +1,5 @@
 <template class="homepage">
   <div>
-    <header>ID</header>
     <!-- 뒷 배경 -->
     <div class="background-chart fade-in">
       <canvas

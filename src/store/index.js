@@ -19,15 +19,15 @@ function convertDataToChartData(dataArray) {
     labels: [],
     datasets: [
       {
-        label: "Predict",
-        backgroundColor: "#686ADE",
-        borderColor: "#686ADE",
-        data: [],
-      },
-      {
         label: "Actual",
         backgroundColor: "#f87979",
         borderColor: "#f87979",
+        data: [],
+      },
+      {
+        label: "Predict",
+        backgroundColor: "#686ADE",
+        borderColor: "#686ADE",
         data: [],
       },
     ],
@@ -37,15 +37,14 @@ function convertDataToChartData(dataArray) {
   dataArray.forEach((item) => {
     // pred_dt 값을 년-월-일T시간 형식으로 변환하여 labels 배열에 추가합니다.
     const predDt = new Date(item.pred_dt);
-    console.log(item.pred_dt);
     const formattedPredDt = `${predDt.getFullYear()}-${(predDt.getMonth() + 1)
       .toString()
       .padStart(2, "0")}-${predDt.getDate()}T${predDt.getHours()}`;
     chartData.labels.push(formattedPredDt);
 
     // pred_value와 real_value 값을 해당 데이터셋에 추가합니다.
-    chartData.datasets[0].data.push(item.pred_value);
-    chartData.datasets[1].data.push(item.real_value);
+    chartData.datasets[0].data.push(item.real_value);
+    chartData.datasets[1].data.push(item.pred_value);
   });
 
   return chartData;
@@ -55,8 +54,10 @@ export default new Vuex.Store({
   state: {
     images: [1, 2, 3],
     user: {
-      account: "",
+      userId: 1,
+      username: "",
       password: "",
+      token: "",
       isLogin: false,
     },
     fields: [
@@ -89,38 +90,34 @@ export default new Vuex.Store({
       labels: [],
       datasets: [
         {
-          label: "Predict",
+          label: "Actual",
           backgroundColor: "#f87979",
-          showLine: true,
+          borderColor: "#f87979",
           data: [],
         },
         {
-          label: "Actual",
+          label: "Predict",
           backgroundColor: "#686ADE",
-          showLine: true,
+          borderColor: "#686ADE",
           data: [],
         },
       ],
     },
   },
   mutations: {
-    setUserData(state, { userData }) {
-      state.user.account = userData.account;
-      state.user.password = userData.password;
+    SET_USER_DATA(state, userData) {
+      state.user = userData;
       state.user.isLogin = true;
     },
+    // 리스트 불러온 후 새로 넘버링
     SET_ITEMS(state, items) {
-      console.log(items);
       const itemsWithNewIds = items.map((item, index) => ({
         ...item,
         no: index + 1,
       }));
-      console.log(itemsWithNewIds);
       state.items = itemsWithNewIds;
     },
     SET_CHART(state, payload) {
-      console.log("2222222222");
-      console.log(payload);
       const dataArray = payload;
       // 위 함수를 사용하여 변환된 데이터를 가져옵니다.
       const chartData = convertDataToChartData(dataArray);
@@ -133,8 +130,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    FETCH_ITEMS({ commit }, payload) {
-      axios.get("/api/filelist/" + payload).then((response) => {
+    FETCH_ITEMS({ commit }, userId) {
+      console.log(`GET : /api/filelist/?id=${userId}`);
+      axios.get("/api/filelist/", { id: userId }).then((response) => {
         let items = response.data;
         commit("SET_ITEMS", items);
       });
@@ -142,6 +140,7 @@ export default new Vuex.Store({
     FETCH_CHART({ commit }, payload) {
       axios.get("/api/filelist/" + payload.id + "/detail").then((response) => {
         let pred_list = response.data["pred_list"];
+        console.log(pred_list);
         let graph_list = response.data["graph_list"];
         commit("SET_CHART", pred_list);
         commit("SET_IMAGES", graph_list[0]);
@@ -149,6 +148,18 @@ export default new Vuex.Store({
     },
     FETCH_IMAGES({ commit }, payload) {
       commit("SET_IMAGES", payload);
+    },
+    async FETCH_LOGIN({ commit }, { username, password }) {
+      await axios
+        .post("/users/login/", {
+          username,
+          password,
+        })
+        .then((response) => {
+          let token = response.data["token"];
+          let userId = response.data["user_id"];
+          commit("SET_USER_DATA", { userId, username, password, token });
+        });
     },
   },
   getters: {},

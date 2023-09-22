@@ -31,8 +31,8 @@ export default {
     },
   },
   created() {
-    let account = this.$store.state.user.account;
-    this.$store.dispatch("FETCH_ITEMS", account);
+    let userId = this.$store.state.user.userId;
+    this.$store.dispatch("FETCH_ITEMS", userId);
   },
 };
 </script>
