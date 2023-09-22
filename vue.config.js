@@ -1,6 +1,7 @@
 const { defineConfig } = require("@vue/cli-service");
 
-const target = "http://127.0.0.1:8000";
+// const target = "http://127.0.0.1:8000";
+const target = "http://10.10.2.37:8000";
 
 module.exports = defineConfig({
   transpileDependencies: true,

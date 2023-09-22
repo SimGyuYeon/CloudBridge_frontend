@@ -1,6 +1,6 @@
 import Vuex from "vuex";
 import Vue from "vue";
-import axios from "axios";
+import baseURL from "@/store/baseUrl";
 
 // Load Vuex
 Vue.use(Vuex);
@@ -25,9 +25,14 @@ function convertDataToChartData(dataArray) {
         data: [],
       },
       {
-        label: "Predict",
-        backgroundColor: "#686ADE",
-        borderColor: "#686ADE",
+        label: "Actual",
+        backgroundColor: "#f87979",
+        borderColor: "#f87979",
+        data: [],
+      },
+      {
+        label: "예측값",
+        backgroundColor: "#f87979",
         data: [],
       },
     ],
@@ -62,8 +67,8 @@ export default new Vuex.Store({
     },
     fields: [
       {
-        key: "no",
-        label: "No.",
+        key: "id",
+        label: "id",
         thClass: "text-center",
         tdClass: "text-center",
       },
@@ -81,10 +86,10 @@ export default new Vuex.Store({
       },
     ],
     items: [
-      { no: 1, name: "power.csv", 진행현황: "진행중" },
-      { no: 2, name: "power.csv", 진행현황: "진행중" },
-      { no: 3, name: "power.csv", 진행현황: "진행중" },
-      { no: 4, name: "power.csv", 진행현황: "진행중" },
+      { id: 1, name: "power.csv", 진행현황: "진행중" },
+      { id: 2, name: "power.csv", 진행현황: "진행중" },
+      { id: 3, name: "power.csv", 진행현황: "진행중" },
+      { id: 4, name: "power.csv", 진행현황: "진행중" },
     ],
     chartData: {
       labels: [],
@@ -120,7 +125,9 @@ export default new Vuex.Store({
     SET_CHART(state, payload) {
       const dataArray = payload;
       // 위 함수를 사용하여 변환된 데이터를 가져옵니다.
+
       const chartData = convertDataToChartData(dataArray);
+
       console.log(chartData); // 변환된 데이터 확인
       state.chartData = chartData;
     },
@@ -138,13 +145,15 @@ export default new Vuex.Store({
       });
     },
     FETCH_CHART({ commit }, payload) {
-      axios.get("/api/filelist/" + payload.id + "/detail").then((response) => {
-        let pred_list = response.data["pred_list"];
-        console.log(pred_list);
-        let graph_list = response.data["graph_list"];
-        commit("SET_CHART", pred_list);
-        commit("SET_IMAGES", graph_list[0]);
-      });
+      baseURL
+        .get("/api/filelist/" + payload.id + "/detail")
+        .then((response) => {
+          let pred_list = response.data["pred_list"];
+          console.log(pred_list);
+          let graph_list = response.data["graph_list"];
+          commit("SET_CHART", pred_list);
+          commit("SET_IMAGES", graph_list[0]);
+        });
     },
     FETCH_IMAGES({ commit }, payload) {
       commit("SET_IMAGES", payload);
