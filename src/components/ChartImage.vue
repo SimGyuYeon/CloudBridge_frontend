@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="$store.state.images && $store.state.images.chart_image">
-      <img class="col" :src="$store.state.images.chart_image" alt="이미지" />
+    <div v-if="$store.state.images && $store.state.images.image0">
+      <img class="col" :src="$store.state.images.image0" alt="이미지" />
     </div>
   </div>
 </template>

@@ -150,16 +150,24 @@ export default new Vuex.Store({
       commit("SET_IMAGES", payload);
     },
     async FETCH_LOGIN({ commit }, { username, password }) {
-      await axios
-        .post("/users/login/", {
+      try {
+        const response = await axios.post("/users/login/", {
           username,
           password,
-        })
-        .then((response) => {
-          let token = response.data["token"];
-          let userId = response.data["user_id"];
-          commit("SET_USER_DATA", { userId, username, password, token });
         });
+
+        let token = response.data["token"];
+        let userId = response.data["user_id"];
+        commit("SET_USER_DATA", { userId, username, password, token });
+
+        // Return a successful response
+        return { success: true, data: response.data };
+      } catch (error) {
+        console.error(error.response);
+
+        // Return an error response
+        return { success: false, error: error.response };
+      }
     },
   },
   getters: {},

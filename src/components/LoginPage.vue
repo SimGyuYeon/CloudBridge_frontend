@@ -81,8 +81,19 @@ export default {
   },
   methods: {
     async login() {
-      await this.$store.dispatch("FETCH_LOGIN", this.user);
-      this.$router.push("/main");
+      try {
+        const res = await this.$store.dispatch("FETCH_LOGIN", this.user);
+        console.log(res);
+        // Check if the login was successful before navigating to "/main"
+        if (res.success) {
+          this.$router.push("/main");
+        } else {
+          alert("Login failed, contact administrator");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("An error occurred during login");
+      }
     },
   },
 };

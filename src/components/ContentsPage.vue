@@ -8,8 +8,8 @@
     <br />
     <br />
     <br />
-    <!-- <ChartImage></ChartImage> -->
-    <LineChart></LineChart>
+    <ChartImage></ChartImage>
+    <!-- <LineChart></LineChart> -->
     <br />
     <br />
     <br />
@@ -18,16 +18,16 @@
 </template>
 
 <script>
-import LineChart from "./LineChart.vue";
+// import LineChart from "./LineChart.vue";
+import ChartImage from "./ChartImage";
 import FileUpload from "./FileUpload.vue";
 import ImageGrid from "./ImageGrid.vue";
 import FileList from "./FileList.vue";
-// import ChartImage from "./ChartImage";
 
 export default {
   name: "ContentsPage",
-  components: { LineChart, FileUpload, ImageGrid, FileList },
-  // components: { ChartImage, FileUpload, ImageGrid, FileList },
+  // components: { LineChart, FileUpload, ImageGrid, FileList },
+  components: { ChartImage, FileUpload, ImageGrid, FileList },
   data() {
     return {};
   },
