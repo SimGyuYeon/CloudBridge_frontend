@@ -6,8 +6,8 @@
       alt="logo"
     />
     <div class="fade-in fade-in animation-delay__5">
-      <h1 class="hero-title">Cloud Bridge</h1>
-      <h2 class="hero-subtitle">단기 시계열 예측 및 분석 시스템</h2>
+      <h1 class="hero-title">단기 시계열 예측 시스템</h1>
+      <h2 class="hero-subtitle">구름 다리</h2>
     </div>
   </div>
 </template>
